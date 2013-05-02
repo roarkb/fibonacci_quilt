@@ -3,18 +3,7 @@
 TITLE = "\n" + " " * 55 + "Fibonacci Quilt\n\n"
 
 def grid
-  [
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""]
-  ]
+  Array.new(10) { Array.new(10) }
 end
  
 def clear
@@ -45,8 +34,9 @@ $fib = [ 0, 1 ]
 clear
 puts TITLE + "\n" * 11
 
-l = [ 0, 1000 ]
-until l.min > 90 && l.max < 120 do
+# make all rows even-ish, but don't take too long
+row_lengths = [ 0, 1000 ]
+until row_lengths.min > 90 && row_lengths.max < 120 do
   $pre_grid = grid
   
   $fib.each do |num|
@@ -57,7 +47,7 @@ until l.min > 90 && l.max < 120 do
       i1 = rand($pre_grid.length)
       i2 = rand($pre_grid.length)
     
-      if $pre_grid[i1][i2] == ""
+      if $pre_grid[i1][i2] == nil
         found = true
       end
     end
@@ -65,21 +55,21 @@ until l.min > 90 && l.max < 120 do
     $pre_grid[i1][i2] = num
   end
   
-  l = $pre_grid.map { |row| row.join.length }
+  row_lengths = $pre_grid.map { |row| row.join.length }
 end
 
-max_length = l.max + 9
+max_length = row_lengths.max + 9
 
 # pad each grid row evenly
 $pre_grid.each_with_index do |row,row_i|
-  pad = max_length - l[row_i]
-  even = pad / 9
-  pad_a = [ even, even, even, even, even, even, even, even, even ]
-  r_a = [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ].shuffle.take(pad - (even * 9))
-  r_a.each { |e| pad_a[e] = even + 1 }
+  total_pad = max_length - row_lengths[row_i]
+  even_times = total_pad / 9
+  pads = Array.new(9, even_times)
+  remainders = (0..8).to_a.shuffle.take(total_pad - (even_times * 9))
+  remainders.each { |e| pads[e] = even_times + 1 }
   
   row[0..8].each_with_index do |num,num_i|
-    $pre_grid[row_i][num_i] = "#{num}" + " " * pad_a[num_i] 
+    $pre_grid[row_i][num_i] = "#{num}" + " " * pads[num_i] 
   end
 end
 
