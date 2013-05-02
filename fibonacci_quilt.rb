@@ -26,7 +26,7 @@ def zzz
 end
 
 # find element by number in $pre_grid and return indexes
-# TODO: may have to special case if fib starts with 1,1
+# TODO: special case finding 1,1
 def find(num)
   $pre_grid.each_with_index do |row,row_i|
     row.each_with_index do |e,e_i|
@@ -38,8 +38,7 @@ def find(num)
 end
 
 # calculate first 100 fibonacci numbers and store in array
-# TODO: standard fib sequene is 0,1,1,2...
-$fib = [ 1, 2 ]
+$fib = [ 0, 1 ]
 98.times { $fib.push($fib[-1] + $fib[-2]) }
 
 clear
