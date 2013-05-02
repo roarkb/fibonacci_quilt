@@ -26,12 +26,13 @@ def zzz
 end
 
 # find element by number in $pre_grid and return indexes
-# TODO: special case finding 1,1
 def find(num)
   $pre_grid.each_with_index do |row,row_i|
     row.each_with_index do |e,e_i|
-      if e.to_i == num
-        return [ row_i, e_i ]
+      i = [ row_i, e_i ]
+      # special case for finding second 1
+      if e.to_i == num && i != $first1
+        return i
       end
     end
   end
@@ -90,8 +91,10 @@ $pre_grid.each_with_index do |row,row_i|
   end
 end
 
-$fib.each do |num|
+$fib.each_with_index do |num,num_i|
   i = find(num)
+  # special case for finding second 1
+  $first1 = i if num_i == 1
   $display_grid[i[0]][i[1]] = $pre_grid[i[0]][i[1]] 
   zzz
   clear
