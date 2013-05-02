@@ -38,7 +38,7 @@ def find(num)
 end
 
 # calculate first 100 fibonacci numbers and store in array
-# TODO: lookup standard first few fib numbers (0,1,1.. or 1,1.. or 1,2..?)
+# TODO: standard fib sequene is 0,1,1,2...
 $fib = [ 1, 2 ]
 98.times { $fib.push($fib[-1] + $fib[-2]) }
 
