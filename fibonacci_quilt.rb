@@ -1,5 +1,9 @@
 #!/usr/bin/env ruby
 
+# make starter numbers variable?
+#num1 = ARGV[0]
+#num2 = ARGV[1]
+
 TITLE = "\n" + " " * 55 + "Fibonacci Quilt\n\n"
 
 def grid
